@@ -76,7 +76,7 @@
                             <p>Subject: {{product.subject}}</p>
                             <p>Price: {{product.price}}$</p>
                             <p>Location: {{product.location}}</p>
-                            <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
+                            <p> Available Spaces: {{product.availableInventory - cartCount(product.id) }}</p>
                             <button class="btn waves-effect waves-light" v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
 
                             <button class="btn waves-effect waves-light" disabled="disabled" v-else>Add to cart</button>
@@ -145,7 +145,7 @@
                             <p>Subject: {{product.subject}}</p>
                             <p>Price: {{product.price}}$</p>
                             <p>Location: {{product.location}}</p>
-                            <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
+                            <p>Available Spaces: {{product.availableInventory - cartCount(product.id) }}</p>
 
                             <button class="btn waves-effect waves-light" v-on:click='popRemoveItems(product)'>Remove Item</button>
 
