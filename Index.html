@@ -25,6 +25,8 @@
                 <span class="fas fa-cart-plus"></span> Checkout
             </button>
 
+            <br>
+            <h5>Sort by</h5>
             <button class="btn waves-effect waves-light" v-on:click='sortProductsByPrice()'>Sort By Price</button>
             <button class="btn waves-effect waves-light" v-on:click='sortProductsByTitle'>Sort By Title</button>
             <button class="btn waves-effect waves-light" v-on:click='sortProductsByLocation'>Sort By Location</button>
@@ -34,21 +36,22 @@
 
             <div class="row">
 
+                <h5>Order by</h5>
 
                 <p>
                     <label>
                         <input name="group1" id="one" value="asec" type="radio" v-model="globalCheckAsecOrDesc"
                             checked />
-                        <span>Asec</span>
+                        <span>Ascending</span>
+                    </label>
+
+                    <label>
+                        <input name="group1" id="two" value="desc" type="radio" v-model="globalCheckAsecOrDesc" />
+                        <span>Descending</span>
                     </label>
                 </p>
 
-                <p>
-                    <label>
-                        <input name="group1" id="two" value="desc" type="radio" v-model="globalCheckAsecOrDesc" />
-                        <span>Desc</span>
-                    </label>
-                </p>
+              
 
 
             </div>
@@ -59,7 +62,7 @@
             <div class="row" v-if='showProduct'>
 
 
-                <div class="col s12 m4" v-for="product in products">
+                <div class="col s12 m3" v-for="product in products">
 
                     <div class="card">
                         <div class="card-image">
@@ -98,10 +101,6 @@
 
                 </div>
             </div>
-
-
-
-
 
 
 
