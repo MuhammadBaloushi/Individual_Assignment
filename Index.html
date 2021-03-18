@@ -74,9 +74,9 @@
                             <p>Price: {{product.price}}$</p>
                             <p>Location: {{product.location}}</p>
                             <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
-                            <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
+                            <button class="btn waves-effect waves-light" v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
 
-                            <button disabled="disabled" v-else>Add to cart</button>
+                            <button class="btn waves-effect waves-light" disabled="disabled" v-else>Add to cart</button>
 
                             <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
                             <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
@@ -120,7 +120,7 @@
                 </p>
 
 
-                <button v-on:click="submitForm">Place Order</button>
+                <button class="btn waves-effect waves-light" v-on:click="submitForm">Place Order</button>
             </div>
 
 
@@ -148,7 +148,7 @@
                             <p>Location: {{product.location}}</p>
                             <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
 
-                            <button v-on:click='popRemoveItems(product)'>Remove Item</button>
+                            <button class="btn waves-effect waves-light" v-on:click='popRemoveItems(product)'>Remove Item</button>
 
 
                             <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
