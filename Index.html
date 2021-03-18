@@ -13,14 +13,15 @@
 <!--Import Materialize CSS Stylesheet-->
 <link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
 <!-- Font Awesome icon -->
-<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    rel="stylesheet">
 
 
 <body>
     <div id="app">
         <header>
             <h1 v-text="sitename"></h1>
-            <button v-on:click='showCheckout' v-if="enableShoppingCart">
+            <button class="btn waves-effect waves-light" v-on:click='showCheckout' v-if="enableShoppingCart">
                 {{cartItemCount}}
                 <span class="fas fa-cart-plus"></span> Checkout
             </button>
@@ -29,48 +30,38 @@
             <button class="btn waves-effect waves-light" v-on:click='sortProductsByTitle'>Sort By Title</button>
             <button class="btn waves-effect waves-light" v-on:click='sortProductsByLocation'>Sort By Location</button>
             <button class="btn waves-effect waves-light" v-on:click='sortProductsBySubject'>Sort By Subject</button>
-            <button class="btn waves-effect waves-light" v-on:click='sortProductsByAvailablity'>Sort By Availablity</button>
-          
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsByAvailablity'>Sort By
+                Availablity</button>
+
 
             <br>
 
             <div class="row">
 
 
-            <p>
+                <p>
                     <label>
-                      <input name="group1"  id="one" value="asec"  type="radio" v-model="globalCheckAsecOrDesc" checked />
-                      <span>Asec</span>
+                        <input name="group1" id="one" value="asec" type="radio" v-model="globalCheckAsecOrDesc"
+                            checked />
+                        <span>Asec</span>
                     </label>
-                  </p>
+                </p>
 
-                  <p>
-                        <label>
-                          <input name="group1" id="two" value="desc" type="radio" v-model="globalCheckAsecOrDesc"  />
-                          <span>Desc</span>
-                        </label>
-                      </p>
-
-                  
-                  
+                <p>
+                    <label>
+                        <input name="group1" id="two" value="desc" type="radio" v-model="globalCheckAsecOrDesc" />
+                        <span>Desc</span>
+                    </label>
+                </p>
 
 
-           
-     
+            </div>
 
-
-                </div>
-
-
-        
-
-
-       
 
         </header>
         <main>
             <div class="row" v-if='showProduct'>
-           
+
 
                 <div class="col s12 m4" v-for="product in products">
 
@@ -78,11 +69,11 @@
                         <div class="card-image">
                             <img v-bind:src="product.image">
                             <span class="card-title">{{ product.title }}</span>
-                         
+
                         </div>
                         <div class="card-content">
-                         
-                   
+
+
                             <p>Subject: {{product.subject}}</p>
                             <p>Price: {{product.price}}$</p>
                             <p>Location: {{product.location}}</p>
@@ -97,10 +88,7 @@
                             </span>
                             <span v-else>Buy now!</span>
 
-                            <div>
-                                <span v-for='n in product.rating'>★</span>
-                                <span v-for='n in 5-product.rating'>☆</span>
-                            </div>
+
                         </div>
                     </div>
 
@@ -135,59 +123,59 @@
                     <input v-model.trim="order.lastName" />
                 </p>
 
-            
+
                 <button v-on:click="submitForm">Place Order</button>
             </div>
-            
+
 
             <br>
 
             <h1 style="text-align: center;">Shopping Cart Page</h1>
             <br>
 
-            <div class="row" >
-           
+            <div class="row">
 
-                    <div class="col s12 m4" v-for="product in MyCartProducts">
-    
-                        <div class="card">
-                            <div class="card-image">
-                                <img v-bind:src="product.image">
-                                <span class="card-title">{{ product.title }}</span>
-                             
-                            </div>
-                            <div class="card-content">
-                             
-                       
-                                <p>Subject: {{product.subject}}</p>
-                                <p>Price: {{product.price}}$</p>
-                                <p>Location: {{product.location}}</p>
-                                <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
-                                
-                                <button v-on:click='popRemoveItems(product)'>Remove Item</button>
-    
-    
-                                <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
-                                <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
-                                    Only {{product.availableInventory - cartCount(product.id)}} left!
-                                </span>
 
-                                
-                                <span v-else>Buy now!</span>
-    
-                            </div>
+                <div class="col s12 m4" v-for="product in MyCartProducts">
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img v-bind:src="product.image">
+                            <span class="card-title">{{ product.title }}</span>
+
                         </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                        <div class="card-content">
+
+
+                            <p>Subject: {{product.subject}}</p>
+                            <p>Price: {{product.price}}$</p>
+                            <p>Location: {{product.location}}</p>
+                            <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
+
+                            <button v-on:click='popRemoveItems(product)'>Remove Item</button>
+
+
+                            <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
+                            <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
+                                Only {{product.availableInventory - cartCount(product.id)}} left!
+                            </span>
+
+
+                            <span v-else>Buy now!</span>
+
+                        </div>
                     </div>
+
+
+
+
+
+
+
+
+
                 </div>
+            </div>
 
 
         </main>
@@ -218,47 +206,47 @@
                     sendGift: 'Send as a gift',
                     dontSendGift: 'Do not send as a gift'
                 },
-       
+
             },
-           
+
             methods: {
                 addToCart(product) {
                     this.cart.push(product.id);
 
                     this.MyCartProducts.push(product);
-                    
 
-                    
-                 
-                  let tempNo = product.availableInventory - webstore.cartCount(product.id);
-                  if (tempNo > 0) {
-                    webstore.ChangeAvailability(product.id,1)
-                    console.log("still greater than 0");
-                    console.log(this.products);
-                  }
 
-                  if (tempNo < 1) {
-                    webstore.ChangeAvailability(product.id,0)
-                    console.log("Done Now 0");
-                    console.log(this.products);
-                  }
+
+
+                    let tempNo = product.availableInventory - webstore.cartCount(product.id);
+                    if (tempNo > 0) {
+                        webstore.ChangeAvailability(product.id, 1)
+                        console.log("still greater than 0");
+                        console.log(this.products);
+                    }
+
+                    if (tempNo < 1) {
+                        webstore.ChangeAvailability(product.id, 0)
+                        console.log("Done Now 0");
+                        console.log(this.products);
+                    }
 
 
                 },
 
-                
-                ChangeAvailability(id,updateAvailability){
 
-                   let index = this.products.findIndex(product => product.id === id );
+                ChangeAvailability(id, updateAvailability) {
+
+                    let index = this.products.findIndex(product => product.id === id);
 
                     if (this.products[index].id == id) {
                         console.log("Yes Got it ");
                         this.products[index].availability = updateAvailability;
                     };
 
-                    console.log(id,updateAvailability);
+                    console.log(id, updateAvailability);
 
-                console.log(this.products[0]['availability']);
+                    console.log(this.products[0]['availability']);
                 },
 
                 showCheckout() {
@@ -289,15 +277,15 @@
                     }
 
                     if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
-                        return  this.products.sort(compare)
-                        
+                        return this.products.sort(compare)
+
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
 
-                        return  this.products.sort(compare).reverse()
-                        
+                        return this.products.sort(compare).reverse()
+
                     }
-                   
+
                 },
                 sortProductsByTitle() {
                     function compare(a, b) {
@@ -309,16 +297,16 @@
                     }
 
                     if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
-                     
-                        return  this.products.sort(compare)
-                        
+
+                        return this.products.sort(compare)
+
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
 
-                        return  this.products.sort(compare).reverse()
-                        
+                        return this.products.sort(compare).reverse()
+
                     }
-                   
+
                 },
                 sortProductsByLocation() {
                     function compare(a, b) {
@@ -330,15 +318,15 @@
                     }
 
                     if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
-                     
-                        return  this.products.sort(compare)
+
+                        return this.products.sort(compare)
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
 
-						return  this.products.sort(compare).reverse()
-                        
+                        return this.products.sort(compare).reverse()
+
                     }
-                    
+
                 },
                 sortProductsBySubject() {
                     function compare(a, b) {
@@ -349,19 +337,19 @@
                         return 0;
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
-                     
-                        return  this.products.sort(compare)
-                        
+
+                        return this.products.sort(compare)
+
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
 
-                        return  this.products.sort(compare).reverse()
-                        
+                        return this.products.sort(compare).reverse()
+
                     }
-                   
+
                 },
                 sortProductsByAvailablity() {
-                
+
                     function compare(a, b) {
                         if (a.availability > b.availability)
                             return 1;
@@ -369,25 +357,25 @@
                             return -1;
                         return 0;
                     }
-                   
+
                     if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
-                     
+
                         console.log("Im inside asec sortProductsByAvailablity");
                         console.log(this.products.sort(compare));
-                        return  this.products.sort(compare)
+                        return this.products.sort(compare)
                     }
                     if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
                         console.log("Im inside desc sortProductsByAvailablity");
-                        console.log( this.products.sort(compare).reverse());
-                        return  this.products.sort(compare).reverse()
-                        
+                        console.log(this.products.sort(compare).reverse());
+                        return this.products.sort(compare).reverse()
+
                     }
-                   
+
                 },
 
-                popRemoveItems(product){
+                popRemoveItems(product) {
                     this.MyCartProducts.pop(product)
-                   
+
 
                 }
             },
@@ -396,21 +384,21 @@
                     return this.cart.length;
                 },
 
-                enableShoppingCart (){
+                enableShoppingCart() {
                     if (this.cart.length > 0) {
                         return true;
                     } else {
 
                         return false;
-                        
+
                     }
                 },
 
-                
-          
-               
-          
-              
+
+
+
+
+
             },
         });
     </script>
