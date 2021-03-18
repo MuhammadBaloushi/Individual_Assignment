@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Character set configuration -->
+<meta charset="UTF-8">
+<title>MDX Vue JS</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Viewport configuration, scaling options -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Material Icon & Open Sans Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import Materialize CSS Stylesheet-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css" />
+<!--Custom CSS Stylesheet-->
+<link type="text/css" rel="stylesheet" href="css/custom.css" />
+<link rel="stylesheet" href="css/jquery-ui.css">
+<!-- Font Awesome icon -->
+<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    rel="stylesheet">
+
+
+<body>
+    <div id="app">
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button v-on:click='showCheckout' v-if="enableShoppingCart">
+                {{cartItemCount}}
+                <span class="fas fa-cart-plus"></span> Checkout
+            </button>
+
+            <button v-on:click='sortProductsByPrice()'>Sort By Price</button>
+            <button v-on:click='sortProductsByTitle'>Sort By Title</button>
+            <button v-on:click='sortProductsByLocation'>Sort By Location</button>
+            <button v-on:click='sortProductsBySubject'>Sort By Subject</button>
+            <button v-on:click='sortProductsByAvailablity'>Sort By Availablity</button>
+            <button v-on:click='FilterCleanAndAddShoppingCartPage'>Test Button</button>
+
+            
+        
+
+            <br>
+
+            <div class="row">
+
+
+            <p>
+                    <label>
+                      <input name="group1"  id="one" value="asec"  type="radio" v-model="globalCheckAsecOrDesc" checked />
+                      <span>Asec</span>
+                    </label>
+                  </p>
+
+                  <p>
+                        <label>
+                          <input name="group1" id="two" value="desc" type="radio" v-model="globalCheckAsecOrDesc"  />
+                          <span>Desc</span>
+                        </label>
+                      </p>
+
+                  
+                  
+
+
+           
+     
+
+
+                </div>
+
+
+        
+
+
+       
+
+        </header>
+        <main>
+            <div class="row" v-if='showProduct'>
+           
+
+                <div class="col s12 m4" v-for="product in products">
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img v-bind:src="product.image">
+                            <span class="card-title">{{ product.title }}</span>
+                         
+                        </div>
+                        <div class="card-content">
+                         
+                   
+                            <p>Subject: {{product.subject}}</p>
+                            <p>Price: {{product.price}}$</p>
+                            <p>Location: {{product.location}}</p>
+                            <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
+                            <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
+
+                            <button disabled="disabled" v-else>Add to cart</button>
+
+                            <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
+                            <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
+                                Only {{product.availableInventory - cartCount(product.id)}} left!
+                            </span>
+                            <span v-else>Buy now!</span>
+
+                            <div>
+                                <span v-for='n in product.rating'>★</span>
+                                <span v-for='n in 5-product.rating'>☆</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div v-else>
+                <h2>Checkout Page</h2>
+                <p>
+                    <strong>Name:</strong>
+                    <!-- This input field is bound to 'firstName' in the 'order' object -->
+                    <input v-model.trim="order.firstName" />
+                </p>
+                <p>
+                    <strong>Phone number:</strong>
+                    <!-- This input field is bound to 'lastName' in the 'order' object -->
+                    <input v-model.trim="order.lastName" />
+                </p>
+
+            
+                <button v-on:click="submitForm">Place Order</button>
+            </div>
+            
+
+            <br>
+
+            <h1 style="text-align: center;">Shopping Cart Page</h1>
+            <br>
+
+            <div class="row" >
+           
+
+                    <div class="col s12 m4" v-for="product in MyCartProducts">
+    
+                        <div class="card">
+                            <div class="card-image">
+                                <img v-bind:src="product.image">
+                                <span class="card-title">{{ product.title }}</span>
+                             
+                            </div>
+                            <div class="card-content">
+                             
+                       
+                                <p>Subject: {{product.subject}}</p>
+                                <p>Price: {{product.price}}$</p>
+                                <p>Location: {{product.location}}</p>
+                                <p>Available stock: {{product.availableInventory - cartCount(product.id) }}</p>
+                                
+                                <button v-on:click='popRemoveItems(product)'>Remove Item</button>
+    
+    
+                                <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
+                                <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
+                                    Only {{product.availableInventory - cartCount(product.id)}} left!
+                                </span>
+
+                                
+                                <span v-else>Buy now!</span>
+    
+                            </div>
+                        </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                    </div>
+                </div>
+
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="Lessons.js"></script>
+
+    <script type="text/javascript">
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                sitename: 'Vue.js Pet Depot',
+                products: lessons,
+                // product: {
+                //     id: 1001,
+                //     title: "Cat Food, 25lb bag",
+                //     description: "A 25 pound bag of <em>irresistible</em>, " + "organic goodness for your cat.",
+                //     price: 2000,
+                //     image: "images/product-fullsize.png",
+                //     availableInventory: 10,
+                //     rating: 3
+                // },
+                cart: [],
+                globalCheckAsecOrDesc: 'asec',
+                MyCartProducts: [],
+                showProduct: true,
+                order: {
+                    firstName: '',
+                    lastName: '',
+                    address: '',
+                    city: '',
+                    zip: '',
+                    state: '',
+                    method: 'Home',
+                    gift: 'Send as a gift',
+                    sendGift: 'Send as a gift',
+                    dontSendGift: 'Do not send as a gift'
+                },
+       
+            },
+            // created: function () {
+            //     this.products = allProducts
+            // },
+            methods: {
+                addToCart(product) {
+                    this.cart.push(product.id);
+
+                    this.MyCartProducts.push(product);
+                    
+
+                    
+                 
+                  let tempNo = product.availableInventory - webstore.cartCount(product.id);
+                  if (tempNo > 0) {
+                    webstore.ChangeAvailability(product.id,1)
+                    console.log("still greater than 0");
+                    console.log(this.products);
+                  }
+
+                  if (tempNo < 1) {
+                    webstore.ChangeAvailability(product.id,0)
+                    console.log("Done Now 0");
+                    console.log(this.products);
+                  }
+
+
+                },
+
+                
+                ChangeAvailability(id,updateAvailability){
+
+                   let index = this.products.findIndex(product => product.id === id );
+
+                    if (this.products[index].id == id) {
+                        console.log("Yes Got it ");
+                        this.products[index].availability = updateAvailability;
+                    };
+
+                    console.log(id,updateAvailability);
+
+                console.log(this.products[0]['availability']);
+                },
+
+                showCheckout() {
+                    this.showProduct = this.showProduct ? false : true;
+                },
+                submitForm() {
+                    alert('Order submitted!')
+                },
+                canAddToCart(product) {
+                    return product.availableInventory > this.cartCount(product.id);
+                },
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
+                },
+                sortProductsByPrice() {
+                    function compare(a, b) {
+                        if (a.price > b.price)
+                            return 1;
+                        if (a.price < b.price)
+                            return -1;
+                        return 0;
+                    }
+
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
+                        return  this.products.sort(compare)
+                        
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
+
+                        return  this.products.sort(compare).reverse()
+                        
+                    }
+                   
+                },
+                sortProductsByTitle() {
+                    function compare(a, b) {
+                        if (a.title > b.title)
+                            return 1;
+                        if (a.title < b.title)
+                            return -1;
+                        return 0;
+                    }
+
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
+                     
+                        return  this.products.sort(compare)
+                        
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
+
+                        return  this.products.sort(compare).reverse()
+                        
+                    }
+                   
+                },
+                sortProductsByLocation() {
+                    function compare(a, b) {
+                        if (a.location > b.location)
+                            return 1;
+                        if (a.location < b.location)
+                            return -1;
+                        return 0;
+                    }
+
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
+                     
+                        return  this.products.sort(compare)
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
+
+						return  this.products.sort(compare).reverse()
+                        
+                    }
+                    
+                },
+                sortProductsBySubject() {
+                    function compare(a, b) {
+                        if (a.subject > b.subject)
+                            return 1;
+                        if (a.subject < b.subject)
+                            return -1;
+                        return 0;
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
+                     
+                        return  this.products.sort(compare)
+                        
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
+
+                        return  this.products.sort(compare).reverse()
+                        
+                    }
+                   
+                },
+                sortProductsByAvailablity() {
+                
+                    function compare(a, b) {
+                        if (a.availability > b.availability)
+                            return 1;
+                        if (a.availability < b.availability)
+                            return -1;
+                        return 0;
+                    }
+                   
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'asec') {
+                     
+                        console.log("Im inside asec sortProductsByAvailablity");
+                        console.log(this.products.sort(compare));
+                        return  this.products.sort(compare)
+                    }
+                    if (this.$root.$data.globalCheckAsecOrDesc == 'desc') {
+                        console.log("Im inside desc sortProductsByAvailablity");
+                        console.log( this.products.sort(compare).reverse());
+                        return  this.products.sort(compare).reverse()
+                        
+                    }
+                   
+                },
+
+                popRemoveItems(product){
+                    this.MyCartProducts.pop(product)
+                   
+
+                }
+            },
+            computed: {
+                cartItemCount() {
+                    return this.cart.length;
+                },
+
+                enableShoppingCart (){
+                    if (this.cart.length > 0) {
+                        return true;
+                    } else {
+
+                        return false;
+                        
+                    }
+                },
+
+                
+          
+               
+          
+              
+            },
+        });
+    </script>
+
+
+
+
+
+</body>
+
+</html>
