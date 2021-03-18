@@ -29,11 +29,11 @@
                 <span class="fas fa-cart-plus"></span> Checkout
             </button>
 
-            <button v-on:click='sortProductsByPrice()'>Sort By Price</button>
-            <button v-on:click='sortProductsByTitle'>Sort By Title</button>
-            <button v-on:click='sortProductsByLocation'>Sort By Location</button>
-            <button v-on:click='sortProductsBySubject'>Sort By Subject</button>
-            <button v-on:click='sortProductsByAvailablity'>Sort By Availablity</button>
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsByPrice()'>Sort By Price</button>
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsByTitle'>Sort By Title</button>
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsByLocation'>Sort By Location</button>
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsBySubject'>Sort By Subject</button>
+            <button class="btn waves-effect waves-light" v-on:click='sortProductsByAvailablity'>Sort By Availablity</button>
           
 
             <br>
@@ -204,7 +204,7 @@
         var webstore = new Vue({
             el: '#app',
             data: {
-                sitename: 'Vue.js Pet Depot',
+                sitename: 'Individual Assignment ',
                 products: lessons,
                 // product: {
                 //     id: 1001,
