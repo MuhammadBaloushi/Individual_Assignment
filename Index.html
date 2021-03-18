@@ -77,7 +77,7 @@
                             <p>Price: {{product.price}}$</p>
                             <p>Location: {{product.location}}</p>
                             <p> Available Spaces: {{product.availableInventory - cartCount(product.id) }}</p>
-                            <button class="btn waves-effect waves-light" v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
+                            <button  class="btn waves-effect waves-light" v-on:click='addToCart(product)' v-if='canAddToCart(product)'>Add to cart</button>
 
                             <button class="btn waves-effect waves-light" disabled="disabled" v-else>Add to cart</button>
 
@@ -107,20 +107,29 @@
 
             <div v-else>
                 <h2>Checkout Page</h2>
-                <p>
-                    <strong>Name:</strong>
-                    <!-- This input field is bound to 'firstName' in the 'order' object -->
-                    <input v-model.trim="order.firstName" />
-                </p>
-                <p>
-                    <strong>Phone number:</strong>
-                    <!-- This input field is bound to 'lastName' in the 'order' object -->
-                    <input v-model.trim="order.lastName" />
-                </p>
+
+                <form @submit="ValidationForm">
+                 
+
+                        <p>
+                                <strong  for="Name" >Name:</strong>
+                               
+                                <input type="text" id="Name" name="Name" required>
+                        </p>
+                   
+                        <p>
+                                <strong  for="phone">Phone:</strong>
+                               
+                                <input type="number" id="phone" name="phone" required>
+                        </p>
+
+                 
+
+                    <input class="btn waves-effect waves-light" type="submit">
+                  </form>
 
 
-                <button class="btn waves-effect waves-light" v-on:click="submitForm">Place Order</button>
-            </div>
+        
 
 
             <br>
@@ -148,7 +157,6 @@
                             <p>Available Spaces: {{product.availableInventory - cartCount(product.id) }}</p>
 
                             <button class="btn waves-effect waves-light" v-on:click='popRemoveItems(product)'>Remove Item</button>
-
 
                             <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
                             <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
@@ -372,7 +380,12 @@
                     this.MyCartProducts.pop(product);
                     this.cart.pop(product);
 
-                }
+                },
+                ValidationForm(){ 
+                    alert("Order Confirmed");
+                    
+                },
+            
             },
             computed: {
                 cartItemCount() {
